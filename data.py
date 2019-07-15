@@ -3,8 +3,8 @@ import numpy as np
 
 
 def get_sample(point, means, stds):
-    k = np.random.rand()
-    k_stds = k*stds
+    k = np.random.rand(len(stds))
+    k_stds = np.multiply(k, stds)
     return np.add(point, k_stds)
 
 
