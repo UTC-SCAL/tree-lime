@@ -16,6 +16,7 @@ def divide_samples(samples, clusters_range=range(2, 11)):
        :return:
        """
     best_score = 0
+    best_labels = None
     clf = None
     for n_clusters in clusters_range:
         clusterer = KMeans(n_clusters=n_clusters, random_state=10)
@@ -26,7 +27,12 @@ def divide_samples(samples, clusters_range=range(2, 11)):
         if silhouette_avg > best_score:
             best_score = silhouette_avg
             clf = clusterer
-    return clf
+            best_labels = cluster_labels
+    return clf, best_labels
+
+
+def get_best_trees():
+    pass
 
 
 def get_sample(point, means, stds):
