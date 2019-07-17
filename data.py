@@ -12,11 +12,13 @@ from sklearn.metrics import silhouette_samples, silhouette_score
 def divide_samples(samples, clusters_range=range(2, 11)):
     """
        use a clustering technique in order to divide the data first
+       :param clusters_range:
        :param samples:
        :return:
        """
     best_score = 0
     best_labels = None
+    best_n = 0
     clf = None
     for n_clusters in clusters_range:
         clusterer = KMeans(n_clusters=n_clusters, random_state=10)
@@ -28,7 +30,18 @@ def divide_samples(samples, clusters_range=range(2, 11)):
             best_score = silhouette_avg
             clf = clusterer
             best_labels = cluster_labels
-    return clf, best_labels
+            best_n = n_clusters
+    return clf, best_labels, best_n
+
+
+def divide_samples_by_labels(samples, labels, clusters_number):
+    clusters = dict()
+    for i in range(clusters_number):
+        clusters[i] = []
+    for i, sample in enumerate(samples):
+        current_cluster = labels[i]
+        clusters[current_cluster].append(sample)
+    return clusters
 
 
 def get_best_trees():
