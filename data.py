@@ -34,14 +34,44 @@ def divide_samples(samples, clusters_range=range(2, 11)):
     return clf, best_labels, best_n
 
 
-def divide_samples_by_labels(samples, labels, clusters_number):
+def divide_samples_by_labels(samples, labels, clusters_number, predictions):
+    """
+    convert the labels from their array structure into a a dictionary that
+    add every group to its keys
+    :param predictions:
+    :param samples:
+    :param labels:
+    :param clusters_number:
+    :return:
+    """
     clusters = dict()
     for i in range(clusters_number):
         clusters[i] = []
     for i, sample in enumerate(samples):
+        prediction = predictions[i]
         current_cluster = labels[i]
-        clusters[current_cluster].append(sample)
+        clusters[current_cluster].append((sample, prediction))
     return clusters
+
+
+def get_trees_from_clusters(clusters):
+    """
+    return a decision tree fit on the clusters
+    :param clusters:
+    :return:
+    """
+    res = []
+    for key in clusters.keys():
+        cluster = clusters[key]
+        res_x = []
+        res_y = []
+        for x, y in cluster:
+            res_x.append(x)
+            res_y.append(y)
+        clf = tree.DecisionTreeClassifier(max_depth=3, min_samples_split=20)
+        clf.fit(res_x, res_y)
+        res.append(clf)
+    return res
 
 
 def get_best_trees():
