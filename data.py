@@ -96,7 +96,7 @@ def get_points_around(point, predictor, samples, samples_size=5, classes_num=2):
 
 
 def predict_tree(x, y):
-    clf = tree.DecisionTreeClassifier(max_depth=3, min_samples_split=20)
+    clf = tree.DecisionTreeClassifier(max_depth=5, min_samples_split=20)
     clf = clf.fit(x, y)
     return clf
 
