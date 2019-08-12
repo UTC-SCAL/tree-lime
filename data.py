@@ -68,7 +68,7 @@ def get_trees_from_clusters(clusters):
         for x, y in cluster:
             res_x.append(x)
             res_y.append(y)
-        clf = tree.DecisionTreeClassifier(max_depth=3, min_samples_split=20)
+        clf = tree.DecisionTreeClassifier(max_depth=4, min_samples_split=20)
         clf.fit(res_x, res_y)
         res.append(clf)
     return res
